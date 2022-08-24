@@ -1,4 +1,5 @@
 import express from 'express';
+import { Request, Response } from 'express';
 import bodyParser from 'body-parser';
 import { filterImageFromURL, deleteLocalFiles } from './util/util';
 
@@ -29,9 +30,10 @@ import { filterImageFromURL, deleteLocalFiles } from './util/util';
 
   /**************************************************************************** */
 
-  app.get("/filteredimage", async (req, res) => {
+
+  app.get("/filteredimage", async (req: Request, res: Response) => {
     const { image_url } = req.query;
-    const isValidUrl = (urlString: string) => {
+    const isValidUrl = (urlString: string): boolean => {
       try {
         return Boolean(new URL(urlString));
       } catch (error) {
@@ -43,7 +45,10 @@ import { filterImageFromURL, deleteLocalFiles } from './util/util';
       if (!image_url || !isValidUrl) throw new Error();
 
       const filteredpath = await filterImageFromURL(image_url);
-      res.sendFile(filteredpath, async ()=>{ await deleteLocalFiles([filteredpath]); });
+      res.sendFile(
+        filteredpath,
+        async () => { await deleteLocalFiles([filteredpath]); }
+      );
 
     } catch (error) {
       res.send('Pass a valid public image url.')
@@ -53,7 +58,7 @@ import { filterImageFromURL, deleteLocalFiles } from './util/util';
 
   // Root Endpoint
   // Displays a simple message to the user
-  app.get("/", async (req, res) => {
+  app.get("/", async (req: Request, res: Response) => {
     res.send("try GET /filteredimage?image_url={{}}")
   });
 
