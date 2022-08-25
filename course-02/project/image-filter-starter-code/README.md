@@ -24,7 +24,7 @@ The starter code has a task for you to complete an endpoint in `./src/server.ts`
 We've included a few helper functions to handle some of these concepts and we're importing it for you at the top of the `./src/server.ts`  file.
 
 ```typescript
-import {filterImageFromURL, deleteLocalFiles} from './util/util';
+import {filterImageFromURL, deleteLocalFiles} from './util/util'; 
 ```
 
 ### Deploying your system
